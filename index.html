@@ -1,0 +1,467 @@
+<!doctype html>
+<html lang="ru">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Eldos Dev</title>
+		<link
+			href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Syne:wght@400;700;800&display=swap"
+			rel="stylesheet" />
+		<style>
+			*,
+			*::before,
+			*::after {
+				box-sizing: border-box;
+				margin: 0;
+				padding: 0;
+			}
+
+			:root {
+				--bg: #0a0a0a;
+				--bg2: #111111;
+				--bg3: #161616;
+				--border: rgba(255, 255, 255, 0.08);
+				--accent: #a8ff78;
+				--accent2: #78c6ff;
+				--text: #f0f0ee;
+				--muted: #7a7a78;
+				--card-bg: #121212;
+				--font-head: "Syne", sans-serif;
+				--font-mono: "DM Mono", monospace;
+			}
+
+			html {
+				scroll-behavior: smooth;
+			}
+
+			body {
+				background: var(--bg);
+				color: var(--text);
+				font-family: var(--font-mono);
+				font-size: 15px;
+				line-height: 1.7;
+				min-height: 100vh;
+			}
+
+			nav {
+				position: sticky;
+				top: 0;
+				z-index: 100;
+				background: rgba(10, 10, 10, 0.85);
+				backdrop-filter: blur(12px);
+				border-bottom: 1px solid var(--border);
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				padding: 0 2.5rem;
+				height: 56px;
+			}
+
+			.logo {
+				font-family: var(--font-head);
+				font-weight: 800;
+				font-size: 18px;
+				color: var(--accent);
+				letter-spacing: -0.5px;
+			}
+
+			.nav-links {
+				display: flex;
+				gap: 2rem;
+				list-style: none;
+			}
+
+			.nav-links a {
+				color: var(--muted);
+				text-decoration: none;
+				font-size: 13px;
+				letter-spacing: 0.05em;
+				transition: color 0.2s;
+			}
+
+			.nav-links a:hover {
+				color: var(--text);
+			}
+
+			section {
+				padding: 6rem 2.5rem;
+				max-width: 900px;
+				margin: 0 auto;
+			}
+
+			/* HERO */
+			#hero {
+				min-height: calc(100vh - 56px);
+				display: flex;
+				flex-direction: column;
+				justify-content: center;
+				padding: 4rem 2.5rem;
+				max-width: 900px;
+				margin: 0 auto;
+				opacity: 0;
+				transform: translateY(28px);
+				animation: fadeUp 0.8s ease forwards 0.1s;
+			}
+
+			.hero-tag {
+				font-size: 12px;
+				letter-spacing: 0.15em;
+				color: var(--accent);
+				margin-bottom: 1.5rem;
+				text-transform: uppercase;
+			}
+
+			h1 {
+				font-family: var(--font-head);
+				font-size: clamp(3.5rem, 9vw, 7rem);
+				font-weight: 800;
+				line-height: 1;
+				letter-spacing: -2px;
+				color: var(--text);
+				margin-bottom: 0.5rem;
+			}
+
+			.hero-sub {
+				font-family: var(--font-head);
+				font-size: clamp(1.4rem, 3vw, 2rem);
+				font-weight: 400;
+				color: var(--muted);
+				margin-bottom: 2rem;
+				letter-spacing: -0.5px;
+			}
+
+			.hero-desc {
+				max-width: 520px;
+				color: #8a8a88;
+				font-size: 15px;
+				line-height: 1.8;
+				margin-bottom: 2.5rem;
+			}
+
+			.btn {
+				display: inline-block;
+				padding: 12px 28px;
+				border: 1px solid var(--accent);
+				color: var(--accent);
+				text-decoration: none;
+				font-family: var(--font-mono);
+				font-size: 13px;
+				letter-spacing: 0.08em;
+				transition:
+					background 0.2s,
+					color 0.2s;
+				cursor: pointer;
+				background: transparent;
+			}
+
+			.btn:hover {
+				background: var(--accent);
+				color: #0a0a0a;
+			}
+
+			/* SECTION TITLES */
+			.sec-label {
+				font-size: 11px;
+				letter-spacing: 0.18em;
+				color: var(--accent);
+				text-transform: uppercase;
+				margin-bottom: 0.75rem;
+				display: flex;
+				align-items: center;
+				gap: 8px;
+			}
+
+			.sec-label::after {
+				content: "";
+				flex: 1;
+				height: 1px;
+				background: var(--border);
+				max-width: 60px;
+			}
+
+			h2 {
+				font-family: var(--font-head);
+				font-size: clamp(1.8rem, 4vw, 2.8rem);
+				font-weight: 800;
+				letter-spacing: -1px;
+				color: var(--text);
+				margin-bottom: 2rem;
+				line-height: 1.1;
+			}
+
+			/* ABOUT */
+			.about-text {
+				max-width: 600px;
+				color: #8a8a88;
+				font-size: 16px;
+				line-height: 1.85;
+				border-left: 2px solid var(--accent);
+				padding-left: 1.5rem;
+			}
+
+			/* STACK */
+			.stack-grid {
+				display: flex;
+				flex-wrap: wrap;
+				gap: 10px;
+				margin-top: 1rem;
+			}
+
+			.stack-pill {
+				padding: 8px 18px;
+				border: 1px solid var(--border);
+				background: var(--bg3);
+				color: var(--text);
+				font-size: 13px;
+				letter-spacing: 0.04em;
+				font-family: var(--font-mono);
+				transition:
+					border-color 0.2s,
+					color 0.2s;
+				cursor: default;
+			}
+
+			.stack-pill:hover {
+				border-color: var(--accent2);
+				color: var(--accent2);
+			}
+
+			/* PROJECTS */
+			.projects-grid {
+				display: grid;
+				grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+				gap: 16px;
+				margin-top: 1rem;
+			}
+
+			.project-card {
+				background: var(--bg3);
+				border: 1px solid var(--border);
+				padding: 1.5rem;
+				transition:
+					border-color 0.2s,
+					transform 0.2s;
+			}
+
+			.project-card:hover {
+				border-color: rgba(255, 255, 255, 0.2);
+				transform: translateY(-3px);
+			}
+
+			.project-num {
+				font-size: 11px;
+				color: var(--accent);
+				letter-spacing: 0.1em;
+				margin-bottom: 0.75rem;
+			}
+
+			.project-name {
+				font-family: var(--font-head);
+				font-size: 1.1rem;
+				font-weight: 700;
+				color: var(--text);
+				margin-bottom: 0.5rem;
+				letter-spacing: -0.3px;
+			}
+
+			.project-desc {
+				font-size: 13px;
+				color: var(--muted);
+				line-height: 1.7;
+				margin-bottom: 1.25rem;
+			}
+
+			.project-link {
+				font-size: 12px;
+				color: var(--accent2);
+				text-decoration: none;
+				letter-spacing: 0.05em;
+				transition: opacity 0.2s;
+			}
+
+			.project-link:hover {
+				opacity: 0.7;
+			}
+
+			/* CONTACT */
+			.contact-block {
+				display: flex;
+				flex-direction: column;
+				gap: 12px;
+				margin-top: 1rem;
+			}
+
+			.contact-row {
+				display: flex;
+				align-items: center;
+				gap: 12px;
+				text-decoration: none;
+				color: var(--muted);
+				font-size: 14px;
+				transition: color 0.2s;
+			}
+
+			.contact-row:hover {
+				color: var(--text);
+			}
+
+			.contact-icon {
+				width: 36px;
+				height: 36px;
+				border: 1px solid var(--border);
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				font-size: 16px;
+				flex-shrink: 0;
+			}
+
+			/* DIVIDER */
+			.divider {
+				border: none;
+				border-top: 1px solid var(--border);
+				max-width: 900px;
+				margin: 0 auto;
+			}
+
+			footer {
+				text-align: center;
+				padding: 2rem;
+				color: var(--muted);
+				font-size: 12px;
+				letter-spacing: 0.08em;
+				border-top: 1px solid var(--border);
+			}
+
+			@keyframes fadeUp {
+				to {
+					opacity: 1;
+					transform: translateY(0);
+				}
+			}
+
+			.fade-in {
+				opacity: 0;
+				transform: translateY(20px);
+				animation: fadeUp 0.7s ease forwards;
+			}
+		</style>
+	</head>
+	<body>
+		<nav>
+			<span class="logo">eldos.dev</span>
+			<ul class="nav-links">
+				<li><a href="#about">О себе</a></li>
+				<li><a href="#stack">Стек</a></li>
+				<li><a href="#projects">Проекты</a></li>
+				<li><a href="#contact">Контакты</a></li>
+			</ul>
+		</nav>
+
+		<div id="hero">
+			<p class="hero-tag">Доступен для новых проектов</p>
+			<h1>Eldos Dev</h1>
+			<p class="hero-sub">Full-Stack Developer</p>
+			<p class="hero-desc">
+				Я создаю современные, масштабируемые веб-приложения с чистым дизайном и
+				высокой производительностью.
+			</p>
+			<a href="#projects" class="btn">Посмотреть проекты →</a>
+		</div>
+
+		<hr class="divider" />
+
+		<section id="about" class="fade-in" style="animation-delay: 0.2s">
+			<p class="sec-label">01 — О себе</p>
+			<h2>Кто я такой</h2>
+			<p class="about-text">
+				Я full-stack разработчик с фокусом на создание продуктов, которые
+				работают быстро и выглядят профессионально. Мне важны детали — от
+				архитектуры бэкенда до пикселей интерфейса. Люблю чистый код, хорошие
+				абстракции и проекты, которые решают реальные задачи.
+			</p>
+		</section>
+
+		<hr class="divider" />
+
+		<section id="stack" class="fade-in" style="animation-delay: 0.3s">
+			<p class="sec-label">02 — Стек</p>
+			<h2>Технологии</h2>
+			<div class="stack-grid">
+				<span class="stack-pill">React</span>
+				<span class="stack-pill">Next.js</span>
+				<span class="stack-pill">TypeScript</span>
+				<span class="stack-pill">Node.js</span>
+				<span class="stack-pill">PostgreSQL</span>
+				<span class="stack-pill">Prisma</span>
+				<span class="stack-pill">Tailwind CSS</span>
+				<span class="stack-pill">Docker</span>
+				<span class="stack-pill">REST API</span>
+				<span class="stack-pill">Git</span>
+			</div>
+		</section>
+
+		<hr class="divider" />
+
+		<section id="projects" class="fade-in" style="animation-delay: 0.4s">
+			<p class="sec-label">03 — Проекты</p>
+			<h2>Что я сделал</h2>
+			<div class="projects-grid">
+				<div class="project-card">
+					<p class="project-num">001</p>
+					<p class="project-name">Project Alpha</p>
+					<p class="project-desc">
+						Веб-приложение на Next.js с авторизацией, дашбордом и REST API.
+						Оптимизировано под скорость и SEO.
+					</p>
+					<a href="#" class="project-link">Открыть проект →</a>
+				</div>
+				<div class="project-card">
+					<p class="project-num">002</p>
+					<p class="project-name">SaaS Dashboard</p>
+					<p class="project-desc">
+						Аналитическая платформа с real-time данными, построенная на React +
+						Node.js + PostgreSQL.
+					</p>
+					<a href="#" class="project-link">Открыть проект →</a>
+				</div>
+				<div class="project-card">
+					<p class="project-num">003</p>
+					<p class="project-name">API Service</p>
+					<p class="project-desc">
+						Масштабируемый REST API сервис с JWT-аутентификацией, rate limiting
+						и документацией Swagger.
+					</p>
+					<a href="#" class="project-link">Открыть проект →</a>
+				</div>
+			</div>
+		</section>
+
+		<hr class="divider" />
+
+		<section id="contact" class="fade-in" style="animation-delay: 0.5s">
+			<p class="sec-label">04 — Контакты</p>
+			<h2>Свяжитесь со мной</h2>
+			<div class="contact-block">
+				<a href="mailto:eldos@example.com" class="contact-row">
+					<span class="contact-icon">@</span>
+					eldos@example.com
+				</a>
+				<a href="https://github.com/noxtornoxtor4-ux" class="contact-row">
+					<span class="contact-icon">GH</span>
+					github.com/eldos
+				</a>
+				<a href="https://t.me/eldos" class="contact-row">
+					<span class="contact-icon">TG</span>
+					t.me/eldos
+				</a>
+				<a href="https://linkedin.com/in/eldos" class="contact-row">
+					<span class="contact-icon">in</span>
+					linkedin.com/in/eldos
+				</a>
+			</div>
+		</section>
+
+		<footer>© 2026 Eldos Dev — Built with care</footer>
+	</body>
+</html>
